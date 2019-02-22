@@ -6,12 +6,14 @@ class HelloName extends HTMLElement {
     this.attachShadow({ mode: 'open' })
   }
 
-  static get observeAttributes() {
+  static get observedAttributes() {
     return [ 'name' ]
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    this.render()
+    if (oldValue !== newValue) {
+      this.render()
+    }
   }
 
   get name() {
@@ -28,7 +30,7 @@ class HelloName extends HTMLElement {
   }
 
   private initProps() {
-    const props = (this.constructor as any).observeAttributes
+    const props = (this.constructor as any).observedAttributes
     for (const prop of props) {
       if (this.hasAttribute(prop)) {
         this[prop] = this.getAttribute(prop)
@@ -37,7 +39,9 @@ class HelloName extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot.innerHTML =  `<h1>Hello ${this.name}</h1>`
+    const template = document.createElement('template')
+    template.innerHTML = `<h1>Hello ${this.name}</h1>`
+    this.shadowRoot.appendChild(template.content.cloneNode(true))
   }
 
 }

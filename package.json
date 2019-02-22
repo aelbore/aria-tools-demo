@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "npm run build.tools",
     "build.tools": "node symlink",
-    "test.jasmine": "aria test demo/jasmine",
+    "test.jasmine": "aria test demo/jasmine/native-wc/hello-name",
     "test.mocha": "aria test demo/mocha",
     "serve.coverage": "aria serve --test-coverage"
   },
