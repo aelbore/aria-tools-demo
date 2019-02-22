@@ -1,11 +1,13 @@
-import './hello-name'
+import '../../../src/custom-elements-ts/hello-name'
 
-describe('HelloName <hello-name></hello-name>', () => {
-  let element, elementName = 'hello-name'
+const elementName = 'custom-elements-ts-hello-name'
+
+describe(`CustomElementHelloName <${elementName}></${elementName}>`, () => {
+  let element;
 
   const createElement = () => {
     const template = document.createElement('template')
-    template.innerHTML = `<hello-name name="Jane"></hello-name>`
+    template.innerHTML = `<${elementName} name="Jane"></${elementName}>`
     document.body.appendChild(template.content.cloneNode(true))
   
     return document.querySelector(elementName);
@@ -28,7 +30,7 @@ describe('HelloName <hello-name></hello-name>', () => {
     expect(element.shadowRoot).toBeDefined()
   })
 
-  it('should have no attribute [name]', () => {
+  it('should not have attribute [name]', () => {
     expect(element.hasAttribute('name')).toBeFalsy()
   })
 
@@ -62,6 +64,15 @@ describe('HelloName <hello-name></hello-name>', () => {
     expect(element.hasAttribute('name')).toBeTruthy()
     expect(element.getAttribute('name')).toEqual('Maria')
     expect(element.name).toEqual('Maria')
+  })
+
+  it('should rerender when attribute changed.', () => {
+    document.body.removeChild(element)
+
+    element = createElement()
+    element.name = 'Maria'
+    
+    expect(element.shadowRoot.innerHTML.trim()).toEqual(`<h1>Hello Maria</h1>`)
   })
 
 })

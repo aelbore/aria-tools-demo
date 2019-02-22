@@ -1,4 +1,3 @@
-
 class NativeWebComponentCounter extends HTMLElement {
 
   constructor() {
@@ -8,12 +7,14 @@ class NativeWebComponentCounter extends HTMLElement {
     this.addEventListener('click', this.incrementCount.bind(this))
   }
 
-  static get observeAttributes() {
-    return [ 'name' ]
+  static get observedAttributes() {
+    return [ 'count' ]
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    this.render()
+    if (oldValue !== newValue) {
+      this.render()
+    }
   }
 
   get count() {
@@ -33,20 +34,36 @@ class NativeWebComponentCounter extends HTMLElement {
     this.count = (parseInt(this.count) + 1).toString();
   }
 
-  render() {
-    this.shadowRoot
-      .innerHTML = `
-      <button id="count">${this.count}</button>       
-    `
-  }
-
   private initProps() {
-    const props = (this.constructor as any).observeAttributes
+    const props = (this.constructor as any).observedAttributes
     for (const prop of props) {
       if (this.hasAttribute(prop)) {
         this[prop] = this.getAttribute(prop)
       }
     }
+  }
+
+  render() {
+    const template = document.createElement('template')
+    template.innerHTML = `
+      <style>
+        :host { display: inline-block; }
+        :host button {
+          width: 50px;
+          height: 50px;
+          color: white;
+          background-color: #000;
+          border: 0;
+          border-radius: 5px;
+          font-size: 20px;
+          outline: none;
+          cursor: pointer;
+        }    
+      </style>
+      <button id="count">
+        ${this.count}
+      </button>`
+    this.shadowRoot.appendChild(template.content.cloneNode(true))
   }
 
 }

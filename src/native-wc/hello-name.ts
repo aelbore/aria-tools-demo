@@ -1,5 +1,4 @@
-
-class HelloName extends HTMLElement {
+class NativeWebComponentHelloName extends HTMLElement {
 
   constructor() {
     super()
@@ -39,11 +38,9 @@ class HelloName extends HTMLElement {
   }
 
   render() {
-    const template = document.createElement('template')
-    template.innerHTML = `<h1>Hello ${this.name}</h1>`
-    this.shadowRoot.appendChild(template.content.cloneNode(true))
+    this.shadowRoot.innerHTML = `<h1>Hello ${this.name}</h1>`
   }
 
 }
 
-customElements.define('hello-name', HelloName)
+customElements.define('native-wc-hello-name', NativeWebComponentHelloName)

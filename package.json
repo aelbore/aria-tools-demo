@@ -4,9 +4,10 @@
   "description": "",
   "main": "",
   "scripts": {
+    "aria": "aria",
     "postinstall": "npm run build.tools",
     "build.tools": "node symlink",
-    "test.jasmine": "aria test demo/jasmine/native-wc/hello-name",
+    "test.jasmine": "aria test demo/jasmine",
     "test.mocha": "aria test demo/mocha",
     "serve.coverage": "aria serve --test-coverage"
   },
@@ -28,6 +29,7 @@
     "@types/karma": "^3.0.2",
     "@types/node": "^11.9.4",
     "aria-tools": "0.0.2",
+    "custom-elements-ts": "0.0.16",
     "lit-element": "^2.0.1",
     "typescript": "^3.3.3"
   }

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es2015",
+    "experimentalDecorators": true,
+    "paths": {
+      "custom-elements-ts": [ "node_modules/custom-elements-ts/index" ]
+    }
+  }
+}
