@@ -1,4 +1,4 @@
-import { CustomElement, Prop, Watch } from 'custom-elements-ts'
+import { CustomElement, Prop, Watch, Listen } from 'custom-elements-ts'
 
 @CustomElement({
   tag: 'custom-elements-ts-counter',
@@ -26,7 +26,12 @@ export class CustomElementCounter extends HTMLElement {
 
   @Watch('count')
   onPropertyChangedCount(value) {
-    
+    this.shadowRoot.querySelector('button').innerHTML = value.new;
+  }
+
+  @Listen('click')
+  incrementCount(e: CustomEvent) {
+    this.count = (parseInt(this.count) + 1).toString();
   }
 
 }

@@ -1,5 +1,7 @@
 import '../../../src/custom-elements-ts/counter'
 
+import { expect } from 'chai'
+
 const elementName = 'custom-elements-ts-counter'
 
 describe(`CustomElementCounter <${elementName}></${elementName}>`, () => {
@@ -24,19 +26,19 @@ describe(`CustomElementCounter <${elementName}></${elementName}>`, () => {
   })
 
   it('should have element', () => {
-    expect(element).toBeDefined()
+    expect(element).not.undefined
   })
 
   it('should have shadowRoot.', () => {
-    expect(element.shadowRoot).toBeDefined()
+    expect(element.shadowRoot).not.undefined
   })  
 
   it('should not initialize property.', () => {
-    expect(element.count).toBeNull()
+    expect(element.count).to.be.null
   })
 
   it('should not have attribute [count]', () => {
-    expect(element.hasAttribute('count')).toBeFalsy()
+    expect(element.hasAttribute('count')).to.false
   })
 
   it('should initialize attribute and property.', () => {
@@ -44,9 +46,31 @@ describe(`CustomElementCounter <${elementName}></${elementName}>`, () => {
 
     element = createElement()
 
-    expect(element.hasAttribute('count')).toBeTruthy()
-    expect(element.getAttribute('count')).toEqual('1')
-    expect(element.count).toEqual("1")
+    expect(element.hasAttribute('count')).to.true
+    expect(element.getAttribute('count')).to.equal('1')
+    expect(element.count).to.equal("1")
+  })
+
+  it('should set attribute using setAttribute.', () => {
+    document.body.removeChild(element)
+
+    element = createElement()
+    element.setAttribute('count', '1')
+
+    expect(element.hasAttribute('count')).to.be.true
+    expect(element.getAttribute('count')).to.equal('1')
+    expect(element.count).to.equal('1')
+  })
+
+  it('should set attribute using set property.', () => {
+    document.body.removeChild(element)
+
+    element = createElement()
+    element.count = "1"
+
+    expect(element.hasAttribute('count')).to.be.true
+    expect(element.getAttribute('count')).to.equal("1")
+    expect(element.count).to.equal(1)
   })
 
   it('should increment count when button click.', () => {
@@ -55,7 +79,7 @@ describe(`CustomElementCounter <${elementName}></${elementName}>`, () => {
     element = createElement()
     element.click()
 
-    expect(element.count).toEqual(2)
+    expect(element.count).to.equal(2)
   })
 
 })
